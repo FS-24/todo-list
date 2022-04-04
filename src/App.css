@@ -7,6 +7,11 @@
   pointer-events: none;
 }
 
+.Done {
+  background-color: green;
+  color: white;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -46,6 +51,7 @@ ul div {
   margin: 10px auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 40vw;
   border: thin solid black;
   background: white;
@@ -53,4 +59,9 @@ ul div {
   color: black;
   padding: 10px;
   height: 30px;
+}
+
+ul input {
+  width: 20px;
+  font-size: 200px;
 }

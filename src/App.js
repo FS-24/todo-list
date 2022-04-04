@@ -1,7 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Component } from "react";
-
+import TodoList from "./components/todo-list/todo-list.component";
+import { ToDoForm } from "./components/todo-form/todo-form.component";
 class App extends Component {
   constructor() {
     super();
@@ -25,50 +25,31 @@ class App extends Component {
     }
   };
 
+  handleInput = (event) => {
+    this.setState({ value: event.target.value });
+  };
+
   render() {
     return (
       <div className="App">
         <h1>To Do List</h1>
-        <form
-          onSubmit={(event) => {
-            this.handleSubmit(event);
+        <ToDoForm
+          handleSubmit={this.handleSubmit}
+          handleInput={(event) => {
+            this.handleInput(event);
           }}
-        >
-          <input
-            type="text"
-            value={this.state.value}
-            placeholder="name"
-            onInput={(event) => {
-              this.setState({ value: event.target.value });
-            }}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <ul>
-          {this.state.tasks.map(({ id, title, done }, index) => {
-            return (
-              <div
-                key={id}
-                style={
-                  done
-                    ? { backgroundColor: "green", color: "White" }
-                    : { backgroundColor: "white", color: "black" }
-                }
-              >
-                <li>{title}</li>
-                <button
-                  onClick={() => {
-                    let { tasks } = this.state;
-                    tasks[index].done = !done;
-                    this.setState({ tasks: tasks });
-                  }}
-                >
-                  Done
-                </button>
-              </div>
-            );
-          })}
-        </ul>
+          value={this.state.value}
+          placeholder="Add To do"
+        />
+        <TodoList
+          tasks={this.state.tasks}
+          handleChange={(event) => {
+            console.log(event.target);
+            let { tasks } = this.state;
+            tasks[event.target.id].done = event.target.checked;
+            this.setState({ tasks: tasks });
+          }}
+        />
       </div>
     );
   }
