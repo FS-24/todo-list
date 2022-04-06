@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { TodoList } from "./components/todo-list/todo-list.component";
-import TodoForm from "./todo-form/todo-form.component";
+import TodoForm from "./components/todo-form/todo-form.component";
 
 class App extends React.Component {
   constructor() {
