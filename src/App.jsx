@@ -2,32 +2,21 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { TodoList } from "./components/todo-list/todo-list.component";
+import TodoForm from "./todo-form/todo-form.component";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      inputValue: "",
       todoList: [],
     };
   }
 
-  handleInput = (e) => {
-    this.setState({ inputValue: e.target.value });
-  };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    let { inputValue, todoList } = this.state;
+  addNewItem = (task) => {
     let uid = Math.floor(Math.random() * 10000).toString();
-    let title = inputValue;
-
-    if (inputValue.trim().length > 0) {
-      todoList.push({ id: uid, task: title, done: false });
-      this.setState({ inputValue: "" });
-    } else {
-      alert("Add todo");
-    }
+    let todoList = this.state.todoList;
+    todoList.push({ id: uid, task: task, done: false });
+    this.setState({ todoList: todoList });
   };
 
   componentDidMount() {
@@ -41,6 +30,7 @@ class App extends React.Component {
 
   componentDidUpdate() {
     localStorage.setItem("todos", JSON.stringify(this.state.todoList));
+    // console.log("app updated");
   }
 
   handleCheck = (todo) => {
@@ -71,8 +61,6 @@ class App extends React.Component {
 
   handleUpdate = (task, id) => {
     let { todoList } = this.state;
-    let toUpdate;
-
     for (const i in todoList) {
       if (todoList[i].id === id) {
         todoList[i].task = task;
@@ -91,26 +79,26 @@ class App extends React.Component {
         <h1 className="text-uppercase bg-primary text-center rounded-2 text-light">
           Todo list
         </h1>
-        <form onSubmit={this.handleSubmit}>
-          <div className="input-group">
-            <input
-              type="text"
-              name="todoInput"
-              className="form-control"
-              placeholder="Add Todo"
-              value={this.state.inputValue}
-              onInput={this.handleInput}
-            />
-            <button className="btn btn-primary btn-group" type="submit">
-              Add
-            </button>
-          </div>
-        </form>
+        <TodoForm handleSubmit={this.addNewItem} />
 
         <div className="card mt-3">
           <div className="card-header d-flex justify-content-between align-items-center">
             <h3>List of Todos</h3>
-            <span>Total: {this.state.todoList.length}</span>
+            <span>
+              <button
+                className="btn btn-sm btn-danger mx-3"
+                title="Clear All"
+                onClick={() => {
+                  if (window.confirm("Etes vous super de vider la liste???")) {
+                    localStorage.removeItem("todos");
+                    window.location.reload();
+                  }
+                }}
+              >
+                <i className="bi bi-trash3"></i>
+              </button>
+              Total: {this.state.todoList.length}
+            </span>
           </div>
           <TodoList
             todoList={this.state.todoList}

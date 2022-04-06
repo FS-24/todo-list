@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 
 class TodoItem extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class TodoItem extends Component {
     this.setState({
       value: this.props.todo.task,
     });
-    console.log("mount");
+    console.log("composant chargé");
   }
 
   componentDidUpdate() {
@@ -35,14 +35,14 @@ class TodoItem extends Component {
   };
   render() {
     return (
-      <div>
+      <>
         <li
           className="list-group-item d-flex align-items-center"
           onDoubleClick={() => {
             this.setState({ editing: true });
           }}
         >
-          <span className="flex-grow-1">
+          <span className="flex-grow-1 flex-fill">
             <label
               className={
                 this.props.todo.done
@@ -50,6 +50,7 @@ class TodoItem extends Component {
                   : ""
               }
             >
+              {/* checkBox */}
               <input
                 className="mx-2"
                 type="checkbox"
@@ -58,9 +59,11 @@ class TodoItem extends Component {
                   this.props.handleCheck(this.props.todo);
                 }}
               />
+              {/* affichage text */}
               {this.state.editing ? (
                 <form className="d-inline-block" onSubmit={this.handleEdit}>
                   <input
+                    className="form-control"
                     type="text"
                     value={this.state.value}
                     onChange={(e) => {
@@ -73,7 +76,10 @@ class TodoItem extends Component {
               )}
             </label>
           </span>
+
+          {/* button de modification et suppression */}
           <button
+            title={this.state.editing ? "Sauvegarder" : "Modifier"}
             className={
               this.state.editing
                 ? "btn btn-sm btn-success mx-1"
@@ -92,6 +98,7 @@ class TodoItem extends Component {
             ></i>
           </button>
           <button
+            title="Supprimer"
             className="btn btn-sm btn-danger mx-1"
             onClick={() => {
               this.props.handleDelete(this.props.todo.id);
@@ -100,7 +107,7 @@ class TodoItem extends Component {
             <i className="bi bi-trash3"></i>
           </button>
         </li>
-      </div>
+      </>
     );
   }
 }
