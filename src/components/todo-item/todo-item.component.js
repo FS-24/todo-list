@@ -53,6 +53,7 @@ class TodoItem extends Component {
               <input
                 className="mx-2"
                 type="checkbox"
+                checked={this.props.todo.done}
                 onChange={() => {
                   this.props.handleCheck(this.props.todo);
                 }}
@@ -73,7 +74,11 @@ class TodoItem extends Component {
             </label>
           </span>
           <button
-            className="btn btn-sm btn-secondary mx-1"
+            className={
+              this.state.editing
+                ? "btn btn-sm btn-success mx-1"
+                : "btn btn-sm btn-secondary mx-1"
+            }
             onClick={(e) => {
               if (this.state.editing) {
                 this.handleEdit(e);
@@ -82,7 +87,9 @@ class TodoItem extends Component {
               }
             }}
           >
-            <i className="bi bi-pencil"></i>
+            <i
+              className={this.state.editing ? "bi bi-check2" : "bi bi-pencil"}
+            ></i>
           </button>
           <button
             className="btn btn-sm btn-danger mx-1"

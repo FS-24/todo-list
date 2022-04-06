@@ -88,7 +88,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <h1 className="text-uppercase bg-primary text-center">Todo list</h1>
+        <h1 className="text-uppercase bg-primary text-center rounded-2 text-light">
+          Todo list
+        </h1>
         <form onSubmit={this.handleSubmit}>
           <div className="input-group">
             <input
