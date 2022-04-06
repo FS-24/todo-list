@@ -1,27 +1,19 @@
-import { Component } from "react";
-import { TodoItem } from "../todo-list-item/todo-item.component";
+import TodoItem from "../todo-item/todo-item.component";
 
-class TodoList extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <ul>
-        {this.props.tasks.map((task, index) => {
-          return (
-            <TodoItem
-              key={task.id}
-              task={task}
-              handleChange={this.props.handleChange}
-              index={index}
-            />
-          );
-        })}
-      </ul>
-    );
-  }
-}
-
-export default TodoList;
+export const TodoList = (props) => {
+  return (
+    <ul className="list-group list-group-flush">
+      {props.todoList.map((todoTask) => {
+        return (
+          <TodoItem
+            key={todoTask.id}
+            todo={todoTask}
+            handleCheck={props.handleCheck}
+            handleDelete={props.handleDelete}
+            handleUpdate={props.handleUpdate}
+          />
+        );
+      })}
+    </ul>
+  );
+};
